@@ -1,7 +1,12 @@
+import os
+import re
+import operator
+import collections
+
+QUANTITY_OF_RESULTS_TO_SHOW = 10
 
 
 def load_data(filepath: str) -> str:
-    import os
     if not os.path.exists(filepath):
         return None
     with open(filepath, encoding='utf-8') as handle:
@@ -9,15 +14,13 @@ def load_data(filepath: str) -> str:
 
 
 def get_most_frequent_words(text: str) -> dict:
-    import re
-    import operator
     all_words = re.findall(r'\w+', text.lower())
     words_counts = dict()
     for word in all_words:
         if word not in words_counts:
             words_counts[word] = all_words.count(word)
     result = sorted(words_counts.items(), key=operator.itemgetter(1), reverse=True)
-    return result[:10]
+    return result[:QUANTITY_OF_RESULTS_TO_SHOW]
 
 
 if __name__ == '__main__':
